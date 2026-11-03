@@ -2,9 +2,9 @@ server:
   port: ${PORT:8080}
 spring:
   datasource:
-    url: "${DB_URL:jdbc:postgresql://aws-0-ap-south-1.pooler.supabase.com:5432/postgres?sslmode=require}"
-    username: "${DB_USER:postgres.ndqqgnbjqxfgiadiwemg}"
-    password: "${DB_PASS:Chinku@9131}"
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/credentials}
+    username: ${DB_USER:app}
+    password: ${DB_PASS:app}
     hikari:
       maximum-pool-size: 5
   jpa:
