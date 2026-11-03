@@ -1,0 +1,41 @@
+# Local run:  cp .env.example .env  &&  docker compose up --build
+# Frontend: http://localhost:3000   Backend: http://localhost:8080/health
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: credentials
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d credentials"]
+      interval: 5s
+      retries: 10
+  backend:
+    build: ./backend
+    depends_on:
+      db: { condition: service_healthy }
+    environment:
+      DB_URL: jdbc:postgresql://db:5432/credentials
+      DB_USER: app
+      DB_PASS: app
+      JWT_SECRET: ${JWT_SECRET:-dev-only-secret-change-me-dev-only-secret-change-me}
+      MASTER_KEY: ${MASTER_KEY:-dev-master-key-change-me}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-admin@example.com}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-change-me-now}
+      FRONTEND_URL: http://localhost:3000
+      CHAIN_RPC_URL: ${CHAIN_RPC_URL:-}
+      ADMIN_PRIVATE_KEY: ${ADMIN_PRIVATE_KEY:-}
+      CONTRACT_ADDRESS: ${CONTRACT_ADDRESS:-}
+      PINATA_JWT: ${PINATA_JWT:-}
+    ports: ["8080:8080"]
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:8080
+    depends_on: [backend]
+    ports: ["3000:3000"]
+volumes:
+  pgdata:

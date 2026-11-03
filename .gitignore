@@ -1,0 +1,13 @@
+# secrets - NEVER commit
+.env
+.env.local
+*.pem
+# build output
+node_modules/
+.next/
+target/
+artifacts/
+cache/
+.idea/
+.vscode/
+*.iml

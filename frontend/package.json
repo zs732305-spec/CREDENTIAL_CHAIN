@@ -1,0 +1,15 @@
+{
+  "name": "credential-ui",
+  "version": "0.2.0",
+  "private": true,
+  "scripts": { "dev": "next dev", "build": "next build", "start": "next start" },
+  "dependencies": {
+    "jsqr": "1.4.0",
+    "jszip": "3.10.1",
+    "next": "14.2.15",
+    "qrcode-generator": "1.4.4",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "xlsx": "0.18.5"
+  }
+}

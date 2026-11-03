@@ -1,0 +1,25 @@
+# Render Blueprint: New + > Blueprint > select this repo.
+# Secret values (sync:false) are asked in the dashboard - they are NOT stored in git.
+services:
+  - type: web
+    name: credchain-api
+    runtime: docker
+    rootDir: backend
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - { key: DB_URL, sync: false }          # jdbc:postgresql://<supabase pooler host>:5432/postgres
+      - { key: DB_USER, sync: false }         # postgres.<project-ref>
+      - { key: DB_PASS, sync: false }
+      - { key: JWT_SECRET, generateValue: true }
+      - { key: MASTER_KEY, sync: false }      # long random string, never change after first issuer approval
+      - { key: ADMIN_EMAIL, sync: false }
+      - { key: ADMIN_PASSWORD, sync: false }
+      - { key: FRONTEND_URL, sync: false }    # https://your-app.vercel.app
+      - { key: CHAIN_RPC_URL, sync: false }
+      - { key: ADMIN_PRIVATE_KEY, sync: false }
+      - { key: CONTRACT_ADDRESS, sync: false }
+      - { key: PINATA_JWT, sync: false }
+      - { key: CHAIN_ID, value: "80002" }
+      - { key: FUND_AMOUNT, value: "0.1" }
+      - { key: JAVA_OPTS, value: "-Xmx380m" }
